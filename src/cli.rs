@@ -12,7 +12,7 @@ pub(crate) struct Cli {
     #[clap(short, long, multiple_values = true)]
     pub match_str: Vec<String>,
 
-    /// Excluse directories or files
+    /// Exclude directories or files
     #[clap(short, long, multiple_values = true)]
-    pub excluse_strs: Vec<String>,
+    pub exclude_strs: Vec<String>,
 }

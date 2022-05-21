@@ -7,7 +7,7 @@ use std::{path::Path, path::PathBuf, str::FromStr};
 pub(crate) struct FileFilter<'a> {
     code_path: PathBuf,
     glob_base: &'a Vec<String>,
-    excluse_strs: &'a Vec<String>,
+    exclude_strs: &'a Vec<String>,
 }
 
 impl<'a> FileFilter<'a> {
@@ -15,7 +15,7 @@ impl<'a> FileFilter<'a> {
         FileFilter {
             code_path: PathBuf::from_str(&args.path).unwrap(),
             glob_base: &args.match_str,
-            excluse_strs: &args.excluse_strs,
+            exclude_strs: &args.exclude_strs,
         }
     }
 
@@ -34,7 +34,7 @@ impl<'a> FileFilter<'a> {
             if let Ok(path) = x {
                 if let Ok(file_type) = path.file_type() {
                     let file_name = path.file_name().to_str().unwrap().to_string();
-                    if file_type.is_dir() && !self.excluse_strs.contains(&file_name) {
+                    if file_type.is_dir() && !self.exclude_strs.contains(&file_name) {
                         self.filter_dir(&path.path(), ff_arr);
                     }
                 }
