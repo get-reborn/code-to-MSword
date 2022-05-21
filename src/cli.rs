@@ -1,4 +1,5 @@
 use clap::Parser;
+use std::str::FromStr;
 use std::env::current_dir;
 
 #[derive(Parser, Debug)]
@@ -15,4 +16,10 @@ pub(crate) struct Cli {
     /// Exclude directories or files
     #[clap(short, long, multiple_values = true)]
     pub exclude_strs: Vec<String>,
+
+    #[clap(long, default_value_t = current_dir().unwrap().to_str().unwrap().to_string())]
+    pub output_path: String,
+
+    #[clap(short, long, default_value_t = String::from_str("output.docx").unwrap())]
+    pub output_file_name: String,
 }
