@@ -6,7 +6,7 @@ use std::{path::Path, path::PathBuf, str::FromStr};
 
 pub(crate) struct FileFilter<'a> {
     code_path: PathBuf,
-    glob_base: &'a String,
+    glob_base: &'a Vec<String>,
     excluse_strs: &'a Vec<String>,
 }
 
@@ -27,8 +27,8 @@ impl<'a> FileFilter<'a> {
     }
 
     fn filter_dir(&self, path: &Path, ff_arr: &mut Vec<PathBuf>) {
-        let glob_str = path.to_str().unwrap().to_string() + "/" + &self.glob_base;
-        glob_match(&glob_str, ff_arr);
+        let glob_base = path.to_str().unwrap().to_string();
+        glob_match(&glob_base, self.glob_base, ff_arr);
         let dir = path.read_dir().unwrap();
         for x in dir {
             if let Ok(path) = x {
@@ -43,7 +43,19 @@ impl<'a> FileFilter<'a> {
     }
 }
 
-pub fn glob_match(glob_str: &String, ff_arr: &mut Vec<PathBuf>) {
+pub fn glob_match(glob_base: &String, glob_str_array: &Vec<String>, ff_arr: &mut Vec<PathBuf>) {
+    if glob_str_array.is_empty() {
+        let glob_str = glob_base.clone() + "/*";
+        single_glob_match(&glob_str, ff_arr)
+    } else {
+        for str in glob_str_array {
+            let glob_str = glob_base.clone() + "/" + str;
+            single_glob_match(&glob_str, ff_arr);
+        }
+    }
+}
+
+fn single_glob_match(glob_str: &String, ff_arr: &mut Vec<PathBuf>) {
     for entry in glob(glob_str).expect("Failed to read glob pattern") {
         match entry {
             Ok(path) => {

@@ -9,10 +9,10 @@ pub(crate) struct Cli {
     pub path: String,
 
     /// String to match code files
-    #[clap(short, long, default_value_t = String::new())]
-    pub match_str: String,
+    #[clap(short, long, multiple_values = true)]
+    pub match_str: Vec<String>,
 
     /// Excluse directories or files
-    #[clap(short, long)]
+    #[clap(short, long, multiple_values = true)]
     pub excluse_strs: Vec<String>,
 }
