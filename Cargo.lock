@@ -101,7 +101,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "code-to-MSword"
+name = "code-to-msword"
 version = "0.1.0"
 dependencies = [
  "clap",
