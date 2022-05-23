@@ -1,13 +1,13 @@
 use clap::Parser;
 
+use exporter::Exporter;
 use filter::FileFilter;
 use reader::Reader;
-use exporter::Exporter;
 
 mod cli;
+mod exporter;
 mod filter;
 mod reader;
-mod exporter;
 
 fn main() {
     let cli = cli::Cli::parse();

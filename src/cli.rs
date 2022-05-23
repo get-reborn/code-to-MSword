@@ -1,6 +1,6 @@
 use clap::Parser;
-use std::str::FromStr;
 use std::env::current_dir;
+use std::str::FromStr;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]

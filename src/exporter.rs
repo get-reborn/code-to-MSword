@@ -1,5 +1,3 @@
-
-
 use docx_rs::*;
 
 pub(crate) struct Exporter {}
@@ -11,7 +9,14 @@ impl Exporter {
         let file = std::fs::File::create(path).unwrap();
         let mut docx = Docx::new();
         for line in context.lines() {
-            docx = docx.add_paragraph(Paragraph::new().add_run(Run::new().add_text(line)));
+            docx = docx.add_paragraph(
+                Paragraph::new().add_run(
+                    Run::new()
+                        .add_text(line)
+                        .fonts(RunFonts::new().ascii("Menlo"))
+                        .size(16),
+                ),
+            )
         }
         docx.build().pack(file).unwrap();
     }
